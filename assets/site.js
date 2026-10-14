@@ -119,7 +119,8 @@
         : `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(v.list)}&autoplay=1`;
       const yt = ids.length
         ? (v.videos || []).filter((x) => x.id).map((x) => `<a href="https://www.youtube.com/watch?v=${esc(x.id)}" target="_blank" rel="noopener">▶ ${esc(x.title || "觀看影片")} ↗</a>`).join("")
-        : `<a href="https://www.youtube.com/playlist?list=${esc(v.list)}" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a>`;
+        : "";
+      const ytList = v.list ? `<a href="https://www.youtube.com/playlist?list=${esc(v.list)}" target="_blank" rel="noopener">${ids.length ? "完整播放清單" : "在 YouTube 開啟"} ↗</a>` : "";
       return `<article class="card video" id="video-${esc(v.id)}">
         <div class="player" data-src="${esc(src)}">
           <button type="button" class="play" aria-label="播放：${esc(v.zh)}">
@@ -132,7 +133,7 @@
         <p class="desc">${esc(v.desc)}</p>
         ${v.tags && v.tags.length ? `<div class="tags">${v.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
         ${cs.length ? `<div class="links"><span class="lead">對應課程</span>${cs.map((c) => `<a href="#course-${esc(c.id)}">${esc(c.zh)}</a>`).join("")}</div>` : ""}
-        <div class="links">${yt}</div>
+        <div class="links">${yt}${ytList}</div>
       </article>`;
     }).join("");
     grid.addEventListener("click", (e) => {

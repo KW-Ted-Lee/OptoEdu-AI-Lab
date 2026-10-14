@@ -174,7 +174,11 @@ window.LAB_CONFIG = {
     {
       id: "usr-north", zh: "USR 大學社會責任計畫", en: "University Social Responsibility (USR)",
       desc: "大學社會責任計畫的成果紀錄，包含北區聯展等活動。",
-      list: "PL3eFAW4LA9egFUU0m4akLDZTwj2eSBDVD", count: 6,
+      videos: [
+        { id: "3icj8nH5yYA", title: "聊聊我們的USR吧！" },
+        { id: "PoJYw3VZVx0", title: "USR學生培訓計畫" },
+      ],
+      list: "PL3eFAW4LA9egFUU0m4akLDZTwj2eSBDVD",   // 有 videos 時，list 只顯示為「完整播放清單」連結
       tags: ["USR", "成果展"], courses: [],
     },
   ],
