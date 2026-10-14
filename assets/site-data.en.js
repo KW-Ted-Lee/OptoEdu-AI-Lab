@@ -68,6 +68,12 @@ window.LAB_I18N.en = {
       stats: "Prologue + 9 chapters",
     },
     {
+      id: "phoropter", short: "Phoropter Sim", zh: "Phoropter Simulator", en: "綜合驗光儀模擬",
+      desc: "A fully operable phoropter: turn the dials, switch auxiliary lenses, swing in the JCC and rotary prisms, question the patient, listen to the answers and judge the endpoints yourself — from instrument setup all the way to binocular balance and the near add.",
+      tags: ["Phoropter", "Refraction", "Simulation"],
+      stats: "Guided practice · Free mode · Exam",
+    },
+    {
       id: "optquest", zh: "OptQuest II", en: "Optometry RPG",
       desc: "An optometry RPG set on the Mackay campus: solve clinical cases, collect equipment, complete quests and finally face the end-of-term boss exam. Teachers can export scores from the dashboard.",
       note: "For Mackay students only",

@@ -28,7 +28,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "2 學分",
       topics: ["視標與視力換算", "MAR / LogMAR", "光學十字", "MPMVA", "鐘面圖", "JCC", "裂孔板", "雙眼平衡"],
-      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
+      platforms: ["optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
     },
     {
       id: "optometry-lab-1", code: "01058", tag: "二專在職", semester: "",
@@ -37,7 +37,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "1 學分",
       topics: ["問診與記錄", "瞳孔距離", "綜合驗光儀", "電腦驗光", "雲霧法", "紅綠雙色"],
-      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
+      platforms: ["optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
     },
     {
       id: "optometry-2", code: "", tag: "二專在職", semester: "",        // TODO：課號、學分、重點主題
@@ -46,7 +46,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
+      platforms: ["optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
     },
     {
       id: "optometry-lab-2", code: "", tag: "二專在職", semester: "",    // TODO：課號、學分、重點主題
@@ -55,7 +55,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
+      platforms: ["optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
     },
     {
       id: "optometry-lab-3", code: "01065", tag: "二專在職", semester: "",
@@ -111,6 +111,13 @@ window.LAB_CONFIG = {
       url: "https://kw-ted-lee.github.io/general.optometry-lab/", status: "live",
       tags: ["驗光流程", "臨床模擬", "互動實驗"],
       stats: "序章＋9 章",
+    },
+    {
+      id: "phoropter", short: "驗光儀模擬", zh: "綜合驗光儀模擬", en: "Phoropter Simulator",
+      desc: "一台可以完整操作的綜合驗光儀：轉旋鈕、換輔助鏡、擺入 JCC 與旋轉稜鏡，問病人、聽回答、自己判斷終點，從儀器設定一路做到雙眼平衡與近用加入度。",
+      url: "https://kw-ted-lee.github.io/general.optometry-lab/phoropter.html", status: "live",
+      tags: ["綜合驗光儀", "驗光流程", "模擬操作"],
+      stats: "引導練習・自由操作・考核",
     },
     {
       id: "optquest", short: "OptQuest II", zh: "OptQuest II", en: "Optometry RPG",
