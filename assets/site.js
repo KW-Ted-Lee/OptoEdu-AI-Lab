@@ -5,7 +5,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  const STATUS = { live: ["上線中", "live"], soon: ["即將上線", "soon"], dev: ["開發中", "dev"] };
+  const STATUS = { live: ["上線中", "live"], soon: ["即將上線", "soon"], dev: ["開發中", "dev"], campus: ["校內使用", "campus"] };
   const PLAT = Object.fromEntries((C.platforms || []).map((p) => [p.id, p]));
 
   /* ---------- 主題 ---------- */
@@ -95,6 +95,7 @@
         <div class="card-top"><span class="status ${st[1]}">${st[0]}</span></div>
         <h3>${esc(p.zh)}<span class="en">${esc(p.en)}</span></h3>
         <p class="desc">${esc(p.desc)}</p>
+        ${p.note ? `<p class="plat-note">${esc(p.note)}</p>` : ""}
         ${p.stats ? `<div class="meta">${esc(p.stats)}</div>` : ""}
         ${p.tags && p.tags.length ? `<div class="tags">${p.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
         ${usedBy.length ? `<div class="meta">用於：${usedBy.map(esc).join("、")}</div>` : ""}
@@ -215,7 +216,7 @@
     const idx = [];
     const add = (type, title, sub, text, target) => idx.push({ type, title, sub, target, hay: [title, sub, text].join(" ").toLowerCase() });
     (C.courses || []).forEach((c) => add("課程", c.zh, [c.en, [].concat(c.tag || []).join("・"), c.code].filter(Boolean).join("・"), [c.desc, (c.topics || []).join(" "), c.semester].join(" "), "course-" + c.id));
-    (C.platforms || []).forEach((p) => add("學習平台", p.zh, p.en, [p.desc, (p.tags || []).join(" "), p.stats].join(" "), "plat-" + p.id));
+    (C.platforms || []).forEach((p) => add("學習平台", p.zh, p.en, [p.desc, (p.tags || []).join(" "), p.stats, p.note, (STATUS[p.status] || [""])[0]].join(" "), "plat-" + p.id));
     (C.videos || []).forEach((v) => add("影音", v.zh, v.en, [v.desc, (v.tags || []).join(" "), (v.videos || []).map((x) => x.title).join(" "), "影片 YouTube"].join(" "), "video-" + v.id));
     (C.research || []).forEach((r, i) => add("研究", r.zh, r.en, [r.desc, (r.tags || []).join(" "), r.note].join(" "), "research-" + i));
     const PT = { poster: "poster 海報 研討會", journal: "journal 期刊 論文", book: "book 書 譯著 著作", talk: "talk 演講", conference: "conference 研討會 論文" };

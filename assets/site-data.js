@@ -26,7 +26,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "2 學分",
       topics: ["視標與視力換算", "MAR / LogMAR", "光學十字", "MPMVA", "鐘面圖", "JCC", "裂孔板", "雙眼平衡"],
-      platforms: [],
+      platforms: ["optometry-lab-bench"],
     },
     {
       id: "optometry-lab-1", code: "01058", tag: "二專在職", semester: "",
@@ -35,7 +35,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "1 學分",
       topics: ["問診與記錄", "瞳孔距離", "綜合驗光儀", "電腦驗光", "雲霧法", "紅綠雙色"],
-      platforms: ["record-ai"],
+      platforms: ["optometry-lab-bench", "record-ai"],
     },
     {
       id: "optometry-2", code: "", tag: "二專在職", semester: "",        // TODO：課號、學分、重點主題
@@ -44,7 +44,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: [],
+      platforms: ["optometry-lab-bench"],
     },
     {
       id: "optometry-lab-2", code: "", tag: "二專在職", semester: "",    // TODO：課號、學分、重點主題
@@ -53,7 +53,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: [],
+      platforms: ["optometry-lab-bench"],
     },
     {
       id: "optometry-lab-3", code: "01065", tag: "二專在職", semester: "",
@@ -93,7 +93,8 @@ window.LAB_CONFIG = {
     },
   ],
 
-  /* 學習平台：url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以 */
+  /* 學習平台：url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以
+     status：live 上線中／soon 即將上線／dev 開發中／campus 校內使用（不顯示連結）；note 會顯示在說明下方 */
   platforms: [
     {
       id: "optics-bench", zh: "視光光學實驗台", en: "Optics Bench",
@@ -103,11 +104,11 @@ window.LAB_CONFIG = {
       stats: "15 章・30 實驗・83 種練習題型",
     },
     {
-      id: "optometry-lab-bench", zh: "視光學實驗台", en: "Optometry Lab Bench",
-      desc: "驗光實作的互動練習平台，內容整理中。",   // TODO：補上正式說明
-      url: "", status: "soon",                           // TODO：補上網址後把 status 改成 "live"
-      tags: ["驗光實作"],
-      stats: "",
+      id: "optometry-lab-bench", zh: "視光學臨床實驗台", en: "Clinical Optometry Bench",
+      desc: "視光學（一）（二）的互動教材：把視力表、驗光流程與雙眼視覺檢查做成可操作的模擬，每章先建立觀念、預測結果，再動手驗證，搭配觀念檢核與隨機數字練習題。",
+      url: "https://kw-ted-lee.github.io/general.optometry-lab/", status: "live",
+      tags: ["驗光流程", "臨床模擬", "互動實驗"],
+      stats: "序章＋9 章",
     },
     {
       id: "optquest", zh: "OptQuest II", en: "Optometry RPG",
@@ -119,7 +120,8 @@ window.LAB_CONFIG = {
     {
       id: "record-ai", zh: "AI 驗光紀錄輔助學習系統", en: "Refraction Record Coach",
       desc: "拍下紙本驗光紀錄表，系統辨識內容後檢查記錄完整性與臨床合理性，即時給學生學習回饋。",
-      url: "", status: "soon",
+      url: "", status: "campus",                          // 校內使用：不公開網址
+      note: "限本校學生使用",
       tags: ["影像辨識", "實作回饋"],
       stats: "",
     },
@@ -292,7 +294,7 @@ window.LAB_CONFIG = {
     phone: ["02-2858-4180", "分機 2415 / 2250"],
     address: ["台北市北投區聖景路92號", "馬偕醫護管理專科學校", "視光學科"],   // 每個元素一行
     topics: "招生諮詢、公益視力篩檢合作、課程與教材交流",
-    github: "",          // TODO：GitHub 個人頁網址
+    github: "https://github.com/kw-ted-lee",
   },
 
   copyright: {
