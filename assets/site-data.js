@@ -26,7 +26,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "2 學分",
       topics: ["視標與視力換算", "MAR / LogMAR", "光學十字", "MPMVA", "鐘面圖", "JCC", "裂孔板", "雙眼平衡"],
-      platforms: ["optometry-lab-bench"],
+      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
     },
     {
       id: "optometry-lab-1", code: "01058", tag: "二專在職", semester: "",
@@ -35,7 +35,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "1 學分",
       topics: ["問診與記錄", "瞳孔距離", "綜合驗光儀", "電腦驗光", "雲霧法", "紅綠雙色"],
-      platforms: ["optometry-lab-bench", "record-ai"],
+      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
     },
     {
       id: "optometry-2", code: "", tag: "二專在職", semester: "",        // TODO：課號、學分、重點主題
@@ -44,7 +44,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: ["optometry-lab-bench"],
+      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
     },
     {
       id: "optometry-lab-2", code: "", tag: "二專在職", semester: "",    // TODO：課號、學分、重點主題
@@ -53,7 +53,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: ["optometry-lab-bench"],
+      platforms: ["optics-bench", "optometry-lab-bench", "record-ai"],
     },
     {
       id: "optometry-lab-3", code: "01065", tag: "二專在職", semester: "",
@@ -62,7 +62,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "1 學分",
       topics: ["Amsler / 色覺 / 立體視", "NPC / NPA", "Worth 4 Dot", "Cover test", "von Graefe", "馬篤式鏡", "Vergence range", "ZCSBV"],
-      platforms: ["zcsbv"],
+      platforms: ["optics-bench", "optometry-lab-bench", "record-ai", "zcsbv"],
     },
     {
       id: "ophthalmic-optics-integration", code: "", tag: "二專在職", semester: "三年級下學期",   // TODO：課號、學分、重點主題
@@ -71,7 +71,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: [],
-      platforms: ["optics-bench"],
+      platforms: ["optics-bench", "optometry-lab-bench"],
     },
     {
       id: "optometry-terms", code: "", tag: "五專", semester: "",
@@ -80,7 +80,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: ["眼球構造", "近視 / 遠視 / 散光", "老花與調節", "聚散度", "Prentice 法則", "視光學未來發展"],
-      platforms: ["optics-bench"],
+      platforms: ["optics-bench", "optometry-lab-bench"],
     },
     {
       id: "optometry-english", code: "", tag: ["二專在職", "五專"], semester: "",
@@ -89,7 +89,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: ["問診英文", "檢查指令", "術語對照", "病例紀錄"],
-      platforms: [],
+      platforms: ["optquest"],
     },
   ],
 
@@ -136,18 +136,19 @@ window.LAB_CONFIG = {
     },
     {
       id: "blinklearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
-      desc: "以網路攝影機偵測眨眼與視線，評估學習時的用眼狀態，提供個人化護眼提醒，讓學生在學習的同時照顧視力健康。",
+      desc: "運用電腦視覺分析學習時的用眼狀態，提供個人化護眼提醒，讓學生在學習的同時照顧視力健康。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
       tags: ["電腦視覺", "護眼", "教育科技"],
       stats: "",
+      usedFor: ["專題開發"],                            // 不是課程的用途，直接寫文字
     },
   ],
 
   /* 影音：YouTube 播放清單或單支影片；list 填播放清單 ID（網址中 list= 後面那一段）；courses 填對應課程的 id（可多個） */
   videos: [
     {
-      id: "basic-optics", zh: "視光概論 基礎光學實驗", en: "Basic Optics Experiments",
+      id: "basic-optics", zh: "基礎光學實驗", en: "Basic Optics Experiments",
       desc: "課堂基礎光學實驗的操作示範影片，學生課前預習、課後複習都可以反覆觀看。",
       list: "PL3eFAW4LA9ehHvV1qDvWRg1IkMDPquGAf", count: 6,
       tags: ["實驗示範", "基礎光學"],
@@ -187,32 +188,32 @@ window.LAB_CONFIG = {
   research: [
     {
       zh: "AI 標準病人與 OSCE 問診訓練", en: "AI Standardized Patients for OSCE",
-      desc: "以地端大型語言模型建構 12 位 AI 標準病人，支援語音對話，讓學生反覆練習視光問診，並以 OSCE 架構評估問診完整性、可用性與內容效度。",
-      tags: ["生成式 AI", "LLM", "醫學教育"],
-      note: "碩士論文研究",
+      desc: "運用生成式 AI 建構虛擬標準病人，讓學生在課堂之外也能反覆練習視光問診，並探討其作為臨床技能教學與評量工具的可行性。",
+      tags: ["生成式 AI", "醫學教育"],
+      note: "",
     },
     {
       zh: "糖尿病視網膜病變眼底影像分級", en: "Diabetic Retinopathy Grading",
-      desc: "以 EyePACS 預訓練、APTOS 2019 微調，建立 YOLOv8 分類模型與 EfficientNet-B3 的加權集成。內部驗證整體正確率 92.1%、QWK 0.954、可轉診敏感度 98.0%；並依 ICDR 處置意義分析錯誤，聚焦重度病變被低估的安全分流問題。",
-      tags: ["電腦視覺", "深度學習", "可信任醫療 AI"],
-      note: "前導研究",
+      desc: "以預訓練後的模型與公開資料集進行微調，建立眼底影像的病變分級模型，並從臨床處置的角度檢視判讀結果，探討醫療 AI 的安全性與可信任度。",
+      tags: ["電腦視覺", "深度學習", "醫療 AI"],
+      note: "",
     },
     {
       zh: "眼動與護眼學習平台", en: "BlinkLearn EduAI",
-      desc: "以網路攝影機偵測眨眼與視線，評估學習時的用眼狀態，提供個人化護眼提醒；與學生團隊以敏捷開發進行。",
+      desc: "運用電腦視覺分析學習時的用眼狀態，提供個人化的護眼提醒，結合視光專業與教育科技。",
       tags: ["電腦視覺", "教育科技"],
-      note: "學生競賽專題",
+      note: "",
     },
     {
       zh: "教育大數據與預警模型", en: "Educational Data Analytics",
-      desc: "運用公開教育資料與機器學習，建構大專校院財務預警模型，並檢視學生懷孕事件統計的資料結構與指標。",
+      desc: "運用公開教育資料與機器學習方法，建構校務相關議題的預警模型，作為教育決策的參考。",
       tags: ["資料科學", "機器學習"],
-      note: "與林敬順老師合作",
+      note: "",
     },
     {
       zh: "評量規準的可學習性", en: "Rubric Learnability",
-      desc: "以俄羅斯方塊 Afterstate-DQN 實驗作為計算類比，探討評量規準的「豐富度」與「可學習性」之間的關係。",
-      tags: ["強化學習", "評量設計"],
+      desc: "從機器學習的觀點，探討評量規準的設計方式與學習成效之間的關係。",
+      tags: ["機器學習", "評量設計"],
       note: "",
     },
   ],
@@ -233,7 +234,7 @@ window.LAB_CONFIG = {
     nameZh: "李冠緯", nameEn: "Kuan-Wei Lee",
     title: ["視光學科", "專任講師｜驗光師"],   // 每個元素一行
     unit: "馬偕醫護管理專科學校",
-    photo: "",          // TODO：大頭照路徑，例如 "assets/pi.jpg"；留空會顯示姓名縮寫
+    photo: "assets/pi.jpg",   // 大頭照；留空會顯示姓名縮寫
     bio: "驗光師出身，具備眼鏡門市與臨床經驗，也做過產業研發、繼續教育與產學合作。2019 年起在馬偕視光任教，目前同時攻讀人工智慧碩士，專注於把 AI 帶進視光臨床教學與眼底影像分析。同時擔任馬偕視光的招生窗口，以及公益視力篩檢的策劃召集人與對外窗口。",
     highlights: [],     // 主持人卡片下方的數字（目前不使用）
     current: [

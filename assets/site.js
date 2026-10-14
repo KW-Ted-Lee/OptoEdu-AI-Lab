@@ -5,6 +5,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  /* campus：已上線，但只給本校學生，首頁不放連結 */
   const STATUS = { live: ["上線中", "live"], soon: ["即將上線", "soon"], dev: ["開發中", "dev"], campus: ["校內使用", "campus"] };
   const PLAT = Object.fromEntries((C.platforms || []).map((p) => [p.id, p]));
 
@@ -47,8 +48,10 @@
     $("#hero-en").textContent = L.nameEn || "";
     $("#hero-tag").textContent = L.tagline || "";
     $("#hero-intro").textContent = L.intro || "";
-    const live = (C.platforms || []).filter((p) => p.status === "live" && p.url).length;
-    $("#hero-stats").innerHTML = [[(C.courses || []).length, "門課程"], [(C.platforms || []).length, "個學習平台"], [live, "個已上線"], [(C.research || []).length, "個研究方向"]]
+    const P = C.platforms || [];
+    const online = P.filter((p) => (p.status === "live" && p.url) || p.status === "campus").length;
+    const campus = P.filter((p) => p.status === "campus").length;
+    $("#hero-stats").innerHTML = [[(C.courses || []).length, "門課程"], [online, "個學習平台上線"], [campus, "個限校內使用"], [(C.research || []).length, "個研究方向"]]
       .map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("");
     $("#chart").innerHTML = chart();
   }
@@ -89,10 +92,10 @@
   function renderPlatforms() {
     $("#platform-grid").innerHTML = (C.platforms || []).map((p) => {
       const st = STATUS[p.status] || STATUS.soon;
-      const usedBy = (C.courses || []).filter((c) => (c.platforms || []).includes(p.id)).map((c) => c.zh);
+      const usedBy = (C.courses || []).filter((c) => (c.platforms || []).includes(p.id)).map((c) => c.zh).concat(p.usedFor || []);
       const go = p.url && p.status === "live" ? `<a class="btn" href="${esc(p.url)}">進入平台</a>` : `<span class="btn ghost" aria-disabled="true">${st[0]}</span>`;
       return `<article class="card" id="plat-${esc(p.id)}">
-        <div class="card-top"><span class="status ${st[1]}">${st[0]}</span></div>
+        <div class="card-top">${p.status === "campus" ? `<span class="status live">上線中</span><span class="status campus">限校內使用</span>` : `<span class="status ${st[1]}">${st[0]}</span>`}</div>
         <h3>${esc(p.zh)}<span class="en">${esc(p.en)}</span></h3>
         <p class="desc">${esc(p.desc)}</p>
         ${p.note ? `<p class="plat-note">${esc(p.note)}</p>` : ""}
