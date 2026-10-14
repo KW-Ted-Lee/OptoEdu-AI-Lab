@@ -113,7 +113,8 @@ window.LAB_CONFIG = {
     {
       id: "optquest", zh: "OptQuest II", en: "Optometry RPG",
       desc: "以馬偕校園為場景的視光 RPG 遊戲：解開臨床案例、收集裝備、完成任務，最後挑戰期末魔王考試；教師後台可匯出成績。",
-      url: "", status: "soon",
+      url: "", status: "campus",                          // 校內使用：不公開網址
+      note: "限本校學生使用",
       tags: ["遊戲式學習", "臨床案例"],
       stats: "11 個臨床案例・17 個任務",
     },
@@ -128,8 +129,17 @@ window.LAB_CONFIG = {
     {
       id: "zcsbv", zh: "ZCSBV 圖解教學程式", en: "ZCSBV Plotter",
       desc: "輸入雙眼視覺檢查數據，自動繪出 ZCSBV 圖，幫助學生判讀內聚不足、開散過度等六種常見雙眼視覺問題。",
-      url: "", status: "dev",
+      url: "", status: "campus",                          // 校內使用：不公開網址
+      note: "限本校學生使用",
       tags: ["雙眼視覺", "圖解法"],
+      stats: "",
+    },
+    {
+      id: "blinklearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
+      desc: "以網路攝影機偵測眨眼與視線，評估學習時的用眼狀態，提供個人化護眼提醒，讓學生在學習的同時照顧視力健康。",
+      url: "", status: "campus",                          // 校內使用：不公開網址
+      note: "限本校學生使用",
+      tags: ["電腦視覺", "護眼", "教育科技"],
       stats: "",
     },
   ],
@@ -294,7 +304,6 @@ window.LAB_CONFIG = {
     phone: ["02-2858-4180", "分機 2415 / 2250"],
     address: ["台北市北投區聖景路92號", "馬偕醫護管理專科學校", "視光學科"],   // 每個元素一行
     topics: "招生諮詢、公益視力篩檢合作、課程與教材交流",
-    github: "https://github.com/kw-ted-lee",
   },
 
   copyright: {
