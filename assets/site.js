@@ -61,15 +61,16 @@
 
   function renderCourses() {
     const list = C.courses || [];
-    const tags = [...new Set(list.map((c) => c.tag).filter(Boolean))];
+    const tg = (c) => [].concat(c.tag || []).filter(Boolean);   // tag 可以是字串或陣列
+    const tags = [...new Set(list.flatMap(tg))];
     const chips = $("#course-chips");
-    chips.innerHTML = [["all", "全部", list.length]].concat(tags.map((t) => [t, t, list.filter((c) => c.tag === t).length]))
+    chips.innerHTML = [["all", "全部", list.length]].concat(tags.map((t) => [t, t, list.filter((c) => tg(c).includes(t)).length]))
       .map(([v, l, n], i) => `<button type="button" data-v="${esc(v)}" aria-pressed="${i === 0}">${esc(l)}<span class="n">${n}</span></button>`).join("");
     const grid = $("#course-grid");
     grid.innerHTML = list.map((c) => {
       const info = [["時間", c.time], ["地點", c.room], ["學分", c.credits], ["狀態", c.status]].filter(([, v]) => v);
-      return `<article class="card" id="course-${esc(c.id)}" data-tag="${esc(c.tag)}">
-        <div class="card-top">${c.code ? `<span class="badge">${esc(c.code)}</span>` : ""}${c.tag ? `<span class="badge plain">${esc(c.tag)}</span>` : ""}${c.semester ? `<span class="sem">${esc(c.semester)}</span>` : ""}</div>
+      return `<article class="card" id="course-${esc(c.id)}" data-tag="${esc(tg(c).join("|"))}">
+        <div class="card-top">${c.code ? `<span class="badge">${esc(c.code)}</span>` : ""}${tg(c).map((t) => `<span class="badge plain">${esc(t)}</span>`).join("")}${c.semester ? `<span class="sem">${esc(c.semester)}</span>` : ""}</div>
         <h3>${esc(c.zh)}<span class="en">${esc(c.en)}</span></h3>
         ${c.desc ? `<p class="desc">${esc(c.desc)}</p>` : (!(c.topics || []).length ? `<p class="desc empty">課程介紹整理中。</p>` : "")}
         ${info.length ? `<div class="info">${info.map(([k, v]) => `<div><span>${k}</span>${esc(v)}</div>`).join("")}</div>` : ""}
@@ -81,7 +82,7 @@
     chips.addEventListener("click", (e) => {
       const b = e.target.closest("button"); if (!b) return;
       chips.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
-      grid.querySelectorAll(".card").forEach((card) => { card.hidden = !(b.dataset.v === "all" || card.dataset.tag === b.dataset.v); });
+      grid.querySelectorAll(".card").forEach((card) => { card.hidden = !(b.dataset.v === "all" || card.dataset.tag.split("|").includes(b.dataset.v)); });
     });
   }
 
@@ -110,25 +111,33 @@
     const vc = (v) => [].concat(v.courses || v.course || []).map(course).filter(Boolean);
     grid.innerHTML = V.map((v) => {
       const cs = vc(v);
+      const ids = (v.videos || []).map((x) => x.id).filter(Boolean);
+      const n = ids.length ? ids.length : v.count;
+      const src = ids.length
+        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(ids[0])}?playlist=${ids.map(encodeURIComponent).join(",")}&autoplay=1`
+        : `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(v.list)}&autoplay=1`;
+      const yt = ids.length
+        ? (v.videos || []).filter((x) => x.id).map((x) => `<a href="https://www.youtube.com/watch?v=${esc(x.id)}" target="_blank" rel="noopener">▶ ${esc(x.title || "觀看影片")} ↗</a>`).join("")
+        : `<a href="https://www.youtube.com/playlist?list=${esc(v.list)}" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a>`;
       return `<article class="card video" id="video-${esc(v.id)}">
-        <div class="player" data-list="${esc(v.list)}">
+        <div class="player" data-src="${esc(src)}">
           <button type="button" class="play" aria-label="播放：${esc(v.zh)}">
             <span class="pl-ic"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
             <span class="pl-t">${esc(v.zh)}</span>
-            ${v.count ? `<span class="pl-n">播放清單・${esc(v.count)} 部影片</span>` : ""}
+            ${n ? `<span class="pl-n">${ids.length ? "" : "播放清單・"}${esc(n)} 部影片</span>` : ""}
           </button>
         </div>
         <h3>${esc(v.zh)}<span class="en">${esc(v.en || "")}</span></h3>
         <p class="desc">${esc(v.desc)}</p>
         ${v.tags && v.tags.length ? `<div class="tags">${v.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
         ${cs.length ? `<div class="links"><span class="lead">對應課程</span>${cs.map((c) => `<a href="#course-${esc(c.id)}">${esc(c.zh)}</a>`).join("")}</div>` : ""}
-        <div class="links"><a href="https://www.youtube.com/playlist?list=${esc(v.list)}" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a></div>
+        <div class="links">${yt}</div>
       </article>`;
     }).join("");
     grid.addEventListener("click", (e) => {
       const b = e.target.closest(".play"); if (!b) return;
       const box = b.parentElement;
-      box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(box.dataset.list)}&autoplay=1" title="YouTube 播放清單" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
+      box.innerHTML = `<iframe src="${esc(box.dataset.src)}" title="YouTube 影片" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
     });
   }
 
@@ -205,9 +214,9 @@
   function buildIndex() {
     const idx = [];
     const add = (type, title, sub, text, target) => idx.push({ type, title, sub, target, hay: [title, sub, text].join(" ").toLowerCase() });
-    (C.courses || []).forEach((c) => add("課程", c.zh, [c.en, c.tag, c.code].filter(Boolean).join("・"), [c.desc, (c.topics || []).join(" "), c.semester].join(" "), "course-" + c.id));
+    (C.courses || []).forEach((c) => add("課程", c.zh, [c.en, [].concat(c.tag || []).join("・"), c.code].filter(Boolean).join("・"), [c.desc, (c.topics || []).join(" "), c.semester].join(" "), "course-" + c.id));
     (C.platforms || []).forEach((p) => add("學習平台", p.zh, p.en, [p.desc, (p.tags || []).join(" "), p.stats].join(" "), "plat-" + p.id));
-    (C.videos || []).forEach((v) => add("影音", v.zh, v.en, [v.desc, (v.tags || []).join(" "), "影片 YouTube"].join(" "), "video-" + v.id));
+    (C.videos || []).forEach((v) => add("影音", v.zh, v.en, [v.desc, (v.tags || []).join(" "), (v.videos || []).map((x) => x.title).join(" "), "影片 YouTube"].join(" "), "video-" + v.id));
     (C.research || []).forEach((r, i) => add("研究", r.zh, r.en, [r.desc, (r.tags || []).join(" "), r.note].join(" "), "research-" + i));
     const PT = { poster: "poster 海報 研討會", journal: "journal 期刊 論文", book: "book 書 譯著 著作", talk: "talk 演講", conference: "conference 研討會 論文" };
     (C.publications || []).forEach((p, i) => add("發表", p.title, `${p.year}・${p.venue}`, [p.authors, PT[p.type] || p.type].join(" "), "pub-" + i));

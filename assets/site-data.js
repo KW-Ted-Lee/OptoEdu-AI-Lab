@@ -17,7 +17,7 @@ window.LAB_CONFIG = {
     unit: "馬偕醫護管理專科學校 視光學科",
   },
 
-  /* 課程：tag = 學制或班別；platforms 填學習平台的 id（見下方 platforms） */
+  /* 課程：tag = 學制或班別（多個學制都有開就用陣列，例如 ["二專在職", "五專"]）；platforms 填學習平台的 id（見下方 platforms） */
   courses: [
     {
       id: "optometry-1", code: "01056", tag: "二專在職", semester: "",   // TODO：本學期是否開課、學期別
@@ -65,9 +65,9 @@ window.LAB_CONFIG = {
       platforms: ["zcsbv"],
     },
     {
-      id: "ophthalmic-optics-integration", code: "", tag: "在職專班", semester: "三年級下學期",   // TODO：課號、學分、重點主題
+      id: "ophthalmic-optics-integration", code: "", tag: "二專在職", semester: "三年級下學期",   // TODO：課號、學分、重點主題
       zh: "眼鏡光學技術整合", en: "Integrated Ophthalmic Optics & Dispensing",
-      desc: "在職專班三年級下學期的課程，整合眼鏡光學理論與配鏡技術實務。",
+      desc: "二專在職三年級下學期的課程，整合眼鏡光學理論與配鏡技術實務。",
       time: "", room: "", status: "",
       credits: "",
       topics: [],
@@ -83,8 +83,8 @@ window.LAB_CONFIG = {
       platforms: ["optics-bench"],
     },
     {
-      id: "optometry-english", code: "", tag: "專業英文", semester: "",
-      zh: "視光檢查常用英語", en: "English for Optometric Examination",
+      id: "optometry-english", code: "", tag: ["二專在職", "五專"], semester: "",
+      zh: "視光檢查常用英文", en: "English for Optometric Examination",
       desc: "視光檢查與臨床溝通常用的英文術語與句型，從問診、檢查指令到結果說明。",
       time: "", room: "", status: "",
       credits: "",
@@ -132,7 +132,7 @@ window.LAB_CONFIG = {
     },
   ],
 
-  /* 影音：YouTube 播放清單；list 填播放清單 ID（網址中 list= 後面那一段）；courses 填對應課程的 id（可多個） */
+  /* 影音：YouTube 播放清單或單支影片；list 填播放清單 ID（網址中 list= 後面那一段）；courses 填對應課程的 id（可多個） */
   videos: [
     {
       id: "basic-optics", zh: "視光概論 基礎光學實驗", en: "Basic Optics Experiments",
@@ -142,10 +142,28 @@ window.LAB_CONFIG = {
       courses: ["optometry-terms", "optometry-lab-1", "optometry-lab-2", "optometry-lab-3"],
     },
     {
-      id: "usr-north", zh: "USR 北區聯展", en: "USR Northern Exhibition",
-      desc: "大學社會責任計畫北區聯展的成果紀錄，包含公益義診、驗光師年會參加紀錄等。",
+      /* 單支影片：用 videos 列出影片 ID（網址中 v= 後面那一段），不用 list */
+      id: "free-clinic", zh: "公益篩檢", en: "Community Vision Screening",
+      desc: "帶領視光科學生走出校園參與公益視力篩檢，提供視力檢查與用眼衛教的活動紀錄。",
+      videos: [
+        { id: "5vEMJWYRuFg", title: "20230901 平等國小公益篩檢" },
+        { id: "CVwSmzpdX8Y", title: "20230729 深坑公益篩檢" },
+      ],
+      tags: ["公益篩檢", "視力檢查", "用眼衛教"], courses: [],
+    },
+    {
+      id: "optometrist-conf", zh: "驗光師年會", en: "Taiwan Optometrist Annual Conference",
+      desc: "參加台灣驗光師年會的活動紀錄。",
+      videos: [
+        { id: "CCtGsjkmyyo", title: "驗光師年會紀錄" },   // TODO：換成影片正式標題
+      ],
+      tags: ["驗光師年會", "專業交流"], courses: [],
+    },
+    {
+      id: "usr-north", zh: "USR 大學社會責任計畫", en: "University Social Responsibility (USR)",
+      desc: "大學社會責任計畫的成果紀錄，包含北區聯展等活動。",
       list: "PL3eFAW4LA9egFUU0m4akLDZTwj2eSBDVD", count: 6,
-      tags: ["USR", "公益義診", "驗光師年會"], courses: [],
+      tags: ["USR", "成果展"], courses: [],
     },
   ],
 
