@@ -16,11 +16,12 @@
       <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M11 10h12v2.6h-9.2v3.1H23v2.6h-9.2v3.1H23V24H11z" fill="var(--accent)"/></svg>
       <span><b id="logo-name"></b><small id="logo-sub"></small></span>
     </a>
-    <nav class="nav-links" aria-label="主選單">
-      <a href="#courses">課程</a><a href="#platforms">學習平台</a><a href="#videos">影音</a><a href="#research">研究</a><a href="#publications">發表</a><a href="#pi">主持人</a><a href="#contact-sec">聯絡</a>
+    <nav class="nav-links" aria-label="主選單" data-i18n-attr="aria-label:navAria">
+      <a href="#courses" data-i18n="nav.courses">課程</a><a href="#platforms" data-i18n="nav.platforms">學習平台</a><a href="#videos" data-i18n="nav.videos">影音</a><a href="#research" data-i18n="nav.research">研究</a><a href="#publications" data-i18n="nav.publications">發表</a><a href="#pi" data-i18n="nav.pi">主持人</a><a href="#contact-sec" data-i18n="nav.contact">聯絡</a>
     </nav>
-    <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="開啟選單" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    <button class="icon-btn" id="search-btn" type="button" aria-label="搜尋（快捷鍵 /）"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    <div class="lang" id="lang-switch" role="group" aria-label="切換語言" data-i18n-attr="aria-label:langAria"></div>
+    <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="開啟選單" data-i18n-attr="aria-label:menu" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="icon-btn" id="search-btn" type="button" aria-label="搜尋（快捷鍵 /）" data-i18n-attr="aria-label:search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
     <button class="icon-btn" id="theme-btn" type="button"></button>
   </div>
 </header>
@@ -34,53 +35,54 @@
         <div class="en" id="hero-en"></div>
         <p class="tagline" id="hero-tag"></p>
         <p class="intro" id="hero-intro"></p>
-        <div class="cta"><a class="btn" href="#courses">查看課程</a><a class="btn ghost" href="#platforms">學習平台</a></div>
+        <div class="cta" id="hero-cta"></div>
+        <a class="hero-pi" id="hero-pi" href="#pi"></a>
         <div class="stats" id="hero-stats"></div>
       </div>
-      <div class="chart-box" id="chart" aria-label="視力表圖示" role="img"></div>
+      <div class="chart-box" id="chart" aria-label="視力表圖示" data-i18n-attr="aria-label:chartAria" role="img"></div>
     </div>
   </section>
 
   <section class="sec" id="courses">
     <div class="wrap">
-      <div class="sec-head"><h2><small>COURSES</small>課程</h2><p>目前開設的課程與重點主題。有搭配互動學習平台的課程，可以直接從卡片進入。</p></div>
-      <div class="chips" id="course-chips" role="group" aria-label="依學制篩選"></div>
+      <div class="sec-head" data-sec="courses"></div>
+      <div class="chips" id="course-chips" role="group" aria-label="依學制篩選" data-i18n-attr="aria-label:chipsAria"></div>
       <div class="grid" id="course-grid"></div>
     </div>
   </section>
 
   <section class="sec" id="platforms">
     <div class="wrap">
-      <div class="sec-head"><h2><small>LEARNING PLATFORMS</small>學習平台</h2><p>為課程開發的互動教材與工具，學生用手機或電腦就能直接操作。</p></div>
+      <div class="sec-head" data-sec="platforms"></div>
       <div class="grid" id="platform-grid"></div>
     </div>
   </section>
 
   <section class="sec" id="videos">
     <div class="wrap">
-      <div class="sec-head"><h2><small>VIDEOS</small>影音</h2><p>實驗操作示範與計畫活動紀錄。點播放後才會載入 YouTube 影片。</p></div>
+      <div class="sec-head" data-sec="videos"></div>
       <div class="video-grid" id="video-grid"></div>
     </div>
   </section>
 
   <section class="sec" id="research">
     <div class="wrap">
-      <div class="sec-head"><h2><small>RESEARCH</small>研究</h2><p>視光教育與人工智慧的交會：臨床教學、影像辨識與教育數據。</p></div>
+      <div class="sec-head" data-sec="research"></div>
       <div class="research" id="research-grid"></div>
     </div>
   </section>
 
   <section class="sec" id="publications">
     <div class="wrap">
-      <div class="sec-head"><h2><small>PUBLICATIONS</small>發表</h2></div>
+      <div class="sec-head" data-sec="publications"></div>
       <div class="pubs" id="pubs"></div>
-      <p class="pub-note">* 通訊作者</p>
+      <p class="pub-note" data-i18n="corresponding">* 通訊作者</p>
     </div>
   </section>
 
   <section class="sec" id="pi">
     <div class="wrap">
-      <div class="sec-head"><h2><small>PRINCIPAL INVESTIGATOR</small>主持人</h2></div>
+      <div class="sec-head" data-sec="pi"></div>
       <div class="pi"><div class="pi-card" id="pi-card"></div><div class="cv" id="pi-cv"></div></div>
       <div class="lic" id="pi-lic"></div>
       <div class="lic out" id="pi-out"></div>
@@ -89,7 +91,7 @@
 
   <section class="sec" id="contact-sec">
     <div class="wrap">
-      <div class="sec-head"><h2><small>CONTACT</small>聯絡</h2></div>
+      <div class="sec-head" data-sec="contact"></div>
       <div class="contact" id="contact"></div>
     </div>
   </section>
@@ -97,11 +99,11 @@
 <footer class="site" id="footer"></footer>
 
 <div class="search-layer" id="search-layer" hidden>
-  <div class="search-box" role="dialog" aria-modal="true" aria-label="搜尋網站">
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="搜尋網站" data-i18n-attr="aria-label:searchUi.aria">
     <div class="search-input">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-      <input id="search-input" type="search" placeholder="搜尋課程、平台、研究、發表、證照…" autocomplete="off" aria-label="搜尋關鍵字">
-      <button type="button" class="search-close" id="search-close" aria-label="關閉搜尋">Esc</button>
+      <input id="search-input" type="search" placeholder="搜尋課程、平台、研究、發表、證照…" autocomplete="off" aria-label="搜尋關鍵字" data-i18n-attr="placeholder:searchUi.placeholder;aria-label:searchUi.input">
+      <button type="button" class="search-close" id="search-close" aria-label="關閉搜尋" data-i18n-attr="aria-label:searchUi.close">Esc</button>
     </div>
     <div class="search-hint" id="search-hint"></div>
     <ol class="search-results" id="search-results"></ol>
@@ -109,6 +111,9 @@
 </div>
 
 <script src="assets/site-data.js"></script>
+<script src="assets/site-data.en.js"></script>
+<script src="assets/site-data.ja.js"></script>
+<script src="assets/i18n.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

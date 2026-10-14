@@ -6,6 +6,8 @@
    - 新增一篇發表：在 publications 陣列加一筆
    欄位留空字串 "" 或刪除，該欄位就不會顯示。
    標示「TODO」的地方是目前資料不足、需要您補上的內容。
+   英文、日文翻譯在 site-data.en.js、site-data.ja.js；
+   這裡新增或修改內容後，記得也到那兩個檔案補上翻譯（沒補的欄位會顯示中文）。
    ========================================================= */
 window.LAB_CONFIG = {
   lab: {
@@ -93,25 +95,25 @@ window.LAB_CONFIG = {
     },
   ],
 
-  /* 學習平台：url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以
+  /* 學習平台：short 是課程卡片上的簡稱；url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以
      status：live 上線中／soon 即將上線／dev 開發中／campus 校內使用（不顯示連結）；note 會顯示在說明下方 */
   platforms: [
     {
-      id: "optics-bench", zh: "視光光學實驗台", en: "Optics Bench",
+      id: "optics-bench", short: "光學實驗台", zh: "視光光學實驗台", en: "Optics Bench",
       desc: "幾何與視覺光學 15 章、30 個可拖曳操作的光學實驗，搭配先預測再驗證、觀念檢核與隨機數字練習題。",
       url: "/optics-bench/", status: "live",
       tags: ["幾何光學", "視覺光學", "互動實驗"],
       stats: "15 章・30 實驗・83 種練習題型",
     },
     {
-      id: "optometry-lab-bench", zh: "視光學臨床實驗台", en: "Clinical Optometry Bench",
+      id: "optometry-lab-bench", short: "臨床實驗台", zh: "視光學臨床實驗台", en: "Clinical Optometry Bench",
       desc: "視光學（一）（二）的互動教材：把視力表、驗光流程與雙眼視覺檢查做成可操作的模擬，每章先建立觀念、預測結果，再動手驗證，搭配觀念檢核與隨機數字練習題。",
       url: "https://kw-ted-lee.github.io/general.optometry-lab/", status: "live",
       tags: ["驗光流程", "臨床模擬", "互動實驗"],
       stats: "序章＋9 章",
     },
     {
-      id: "optquest", zh: "OptQuest II", en: "Optometry RPG",
+      id: "optquest", short: "OptQuest II", zh: "OptQuest II", en: "Optometry RPG",
       desc: "以馬偕校園為場景的視光 RPG 遊戲：解開臨床案例、收集裝備、完成任務，最後挑戰期末魔王考試；教師後台可匯出成績。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -119,7 +121,7 @@ window.LAB_CONFIG = {
       stats: "11 個臨床案例・17 個任務",
     },
     {
-      id: "record-ai", zh: "AI 驗光紀錄輔助學習系統", en: "Refraction Record Coach",
+      id: "record-ai", short: "AI 驗光紀錄", zh: "AI 驗光紀錄輔助學習系統", en: "Refraction Record Coach",
       desc: "拍下紙本驗光紀錄表，系統辨識內容後檢查記錄完整性與臨床合理性，即時給學生學習回饋。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -127,7 +129,7 @@ window.LAB_CONFIG = {
       stats: "",
     },
     {
-      id: "zcsbv", zh: "ZCSBV 圖解教學程式", en: "ZCSBV Plotter",
+      id: "zcsbv", short: "ZCSBV 圖解", zh: "ZCSBV 圖解教學程式", en: "ZCSBV Plotter",
       desc: "輸入雙眼視覺檢查數據，自動繪出 ZCSBV 圖，幫助學生判讀內聚不足、開散過度等六種常見雙眼視覺問題。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -135,7 +137,7 @@ window.LAB_CONFIG = {
       stats: "",
     },
     {
-      id: "blinklearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
+      id: "blinklearn", short: "BlinkLearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
       desc: "運用電腦視覺分析學習時的用眼狀態，提供個人化護眼提醒，讓學生在學習的同時照顧視力健康。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -145,8 +147,20 @@ window.LAB_CONFIG = {
     },
   ],
 
-  /* 影音：YouTube 播放清單或單支影片；list 填播放清單 ID（網址中 list= 後面那一段）；courses 填對應課程的 id（可多個） */
+  /* 影音：YouTube 播放清單或單支影片；預覽圖自動用第一支影片，也可用 cover 指定任一支影片的 ID；list 填播放清單 ID（網址中 list= 後面那一段）；courses 填對應課程的 id（可多個） */
   videos: [
+    {
+      id: "admissions", zh: "招生說明會", en: "Admissions Information Session",
+      desc: "馬偕視光的線上招生說明會錄影。想多認識科系、課程與未來出路，也歡迎追蹤招生社群「睛來馬偕｜視光情報所」。",
+      videos: [
+        { id: "5HJf_G4bx9I", title: "1217 線上說明會" },
+      ],
+      links: [   // 其他連結（社群等），會跟影片按鈕排在一起
+        { label: "Instagram｜睛來馬偕｜視光情報所", url: "https://www.instagram.com/recruit.mkcopt/" },
+        { label: "Threads｜睛來馬偕｜視光情報所", url: "https://www.threads.com/@recruit.mkcopt" },
+      ],
+      tags: ["招生", "線上說明會"], courses: [],
+    },
     {
       id: "basic-optics", zh: "基礎光學實驗", en: "Basic Optics Experiments",
       desc: "課堂基礎光學實驗的操作示範影片，學生課前預習、課後複習都可以反覆觀看。",
@@ -293,9 +307,9 @@ window.LAB_CONFIG = {
     ],
     awards: [
       "2025 美容科學研討會 論文海報佳作",
-      "113 年度創新教學競賽 佳作",
-      "113 年度教材教具計畫 佳作",
-      "112 年度教材教具計畫 優等",
+      "2024 年度創新教學競賽 佳作",
+      "2024 年度教材教具計畫 佳作",
+      "2023 年度教材教具計畫 優等",
       "台灣人工智慧協會 第一屆大型語言模型講師認證班 第一名結業",
     ],
     outreach: {

@@ -274,3 +274,48 @@ section.sec { padding-block: 76px; }
 .player .pl-n { font-family: var(--font-mono); font-size: 12px; opacity: 0.8; }
 .status.campus { color: var(--accent); }
 .plat-note { margin: -4px 0 12px; font-size: 13.5px; font-weight: 700; color: var(--accent); }
+.player .play.has-cover { background: linear-gradient(180deg, rgba(14,15,17,.30), rgba(14,15,17,.72)), var(--cover) center / cover no-repeat, #16181b; }
+.player .play.has-cover .pl-t, .player .play.has-cover .pl-n { text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+.card.video .links.social { border-top: 0; padding-top: 0; margin-top: 8px; }
+
+/* ---------- 語言切換 ---------- */
+.lang { display: flex; flex: none; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.lang button { font: inherit; font-size: 13px; font-weight: 700; min-width: 36px; height: 36px; padding: 0 8px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.lang button + button { border-left: 1px solid var(--line); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+@media (max-width: 920px) { .lang { margin-left: auto; } .menu-btn { margin-left: 0 !important; } }
+@media (max-width: 420px) { .nav-inner { gap: 8px; } .lang button { min-width: 30px; padding: 0 6px; } .logo small { display: none; } }
+
+/* ---------- 首屏：主持人 ---------- */
+.hero-pi { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; text-decoration: none; color: var(--ink); padding: 6px 14px 6px 6px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.hero-pi:empty { display: none; }
+.hero-pi:hover { border-color: var(--accent); }
+.hero-pi img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; }
+.hero-pi span { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; line-height: 1.3; }
+.hero-pi small { font-size: 12px; color: var(--muted); }
+.hero-pi b { font-size: 15px; }
+.hero-pi em { font-style: normal; font-size: 13px; color: var(--muted); }
+
+/* ---------- 課程卡片：學習資源小標籤 ---------- */
+.res { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); display: grid; gap: 8px; }
+.res .lead { font-size: 12px; color: var(--muted); }
+.res-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.rc { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; text-decoration: none; border: 1px solid var(--accent); color: var(--accent); line-height: 1.6; }
+.rc:hover { background: var(--accent-soft); }
+.rc.off { border-color: var(--line); color: var(--muted); font-weight: 500; }
+.rc.off small { font-size: 11px; padding-left: 5px; margin-left: 2px; border-left: 1px solid var(--line); }
+.rc.vid { border-style: dashed; }
+
+/* ---------- 發表：翻譯題目 ---------- */
+.pubs .tr { display: block; font-size: 14px; color: var(--muted); font-style: italic; }
+
+/* ---------- 日文字型 ---------- */
+:root:lang(ja) { --font-display: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif; --font-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif; }
+:root:lang(en) .card h3 .en, :root:lang(ja) .card h3 .en { font-style: normal; }
+.badge.cr { color: var(--muted); }
+@media (max-width: 480px) {
+  .logo > span { display: none; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+}
+:root:lang(ja) h2, :root:lang(ja) h3 { word-break: auto-phrase; }
+:root:lang(ja) .hero h1 { font-size: clamp(28px, 5.2vw, 58px); }
