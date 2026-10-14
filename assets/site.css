@@ -319,3 +319,6 @@ section.sec { padding-block: 76px; }
 }
 :root:lang(ja) h2, :root:lang(ja) h3 { word-break: auto-phrase; }
 :root:lang(ja) .hero h1 { font-size: clamp(28px, 5.2vw, 58px); }
+.nw { white-space: nowrap; }
+.hero-pi em { white-space: nowrap; }
+:root:lang(ja) .cv li, :root:lang(ja) .pi-bio, :root:lang(ja) .lic-item, :root:lang(ja) .card p.desc { word-break: auto-phrase; }

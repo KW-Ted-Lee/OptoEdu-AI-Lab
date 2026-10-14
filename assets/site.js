@@ -106,7 +106,7 @@
     $("#hero-cta").innerHTML = `<a class="btn" href="#courses">${esc(U.cta.courses)}</a><a class="btn ghost" href="#platforms">${esc(U.cta.platforms)}</a>` +
       (hasAdm ? `<a class="btn ghost" href="#video-admissions" data-flash>${esc(U.cta.admissions)}</a>` : "");
     const P = C.pi || {};
-    const title = Array.isArray(P.title) ? P.title[P.title.length - 1] : P.title;
+    const title = Array.isArray(P.title) ? P.title.slice(P.title.length > 1 ? 1 : 0).join("｜") : P.title;   // 首頁小字：去掉第一行（科別）
     $("#hero-pi").innerHTML = P.nameZh ? `${P.photo ? `<img src="${esc(P.photo)}" alt="" width="36" height="36">` : ""}<span><small>${esc(U.heroPi)}</small><b>${esc(P.nameZh)}</b>${title ? `<em>${esc(title)}</em>` : ""}</span>` : "";
     const PL = C.platforms || [];
     const online = PL.filter((p) => (p.status === "live" && p.url) || p.status === "campus").length;
@@ -224,12 +224,15 @@
       <li id="pub-${all.indexOf(p)}"><span class="ty">${esc(U.pubTypes[p.type] || p.type || "")}</span><b>${esc(p.title)}</b>${p.titleTr ? `<span class="tr">${esc(p.titleTr)}</span>` : ""}<span class="au">${esc(p.authors)}</span><span class="ve">${esc(p.venue)}</span></li>`).join("")}</ol></div>`).join("");
   }
 
+  /* 職稱以「｜」分段，每段不在中間斷行（避免「オプトメトリスト」被拆開） */
+  const nobr = (t) => String(t).split("｜").map((x) => `<span class="nw">${esc(x)}</span>`).join("<wbr>｜");
+
   function renderPI() {
     const P = C.pi || {};
     const initials = (P.nameZh || P.nameEn || "?").slice(-2);
     const hl = (P.highlights || []).map((h) => `<div><b>${esc(h.n)}</b><span>${esc(h.l)}</span></div>`).join("");
     $("#pi-card").innerHTML = `<div class="avatar">${P.photo ? `<img src="${esc(P.photo)}" alt="${esc(P.nameZh)}">` : esc(initials)}</div>
-      <h3>${esc(P.nameZh)}</h3><div class="en">${esc(P.nameEn)}</div><div class="ti">${Array.isArray(P.title) ? P.title.map(esc).join("<br>") : esc(P.title)}</div><div class="un">${esc(P.unit || (C.lab || {}).unit)}</div>
+      <h3>${esc(P.nameZh)}</h3><div class="en">${esc(P.nameEn)}</div><div class="ti">${[].concat(P.title || []).map(nobr).join("<br>")}</div><div class="un">${esc(P.unit || (C.lab || {}).unit)}</div>
       ${hl ? `<div class="pi-hl">${hl}</div>` : ""}`;
     const block = (t, arr) => (arr && arr.length ? `<div><h4>${esc(t)}</h4><ul>${arr.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>` : "");
     $("#pi-cv").innerHTML = (P.bio ? `<p class="pi-bio">${esc(P.bio)}</p>` : "") +
