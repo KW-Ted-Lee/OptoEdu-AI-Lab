@@ -322,3 +322,27 @@ section.sec { padding-block: 76px; }
 .nw { white-space: nowrap; }
 .hero-pi em { white-space: nowrap; }
 :root:lang(ja) .cv li, :root:lang(ja) .pi-bio, :root:lang(ja) .lic-item, :root:lang(ja) .card p.desc { word-break: auto-phrase; }
+
+/* ---------- 紫電：紫底＋螢光綠的特別配色 ---------- */
+:root[data-theme="shiden"] {
+  --bg: #17111f; --surface: #221a2e; --surface-2: #2c2240; --ink: #efe9f7; --muted: #ab9fc0; --line: #3c2f52;
+  --accent: #8fe04a; --accent-ink: #17111f; --accent-soft: #2b3a1c; --tech: #b98cf2; --amber: #ff8a3d; --ok: #8fe04a;
+  --chip-on: #8fe04a; --chip-on-ink: #17111f;
+  --chart-bg: #f1edf7; --chart-ink: #1d1626; color-scheme: dark;
+}
+:root[data-theme="shiden"] body { background: radial-gradient(1200px 600px at 85% -10%, rgba(143, 224, 74, 0.08), transparent 60%), radial-gradient(900px 500px at -10% 30%, rgba(185, 140, 242, 0.10), transparent 60%), var(--bg); background-attachment: fixed; }
+:root[data-theme="shiden"] .stats b, :root[data-theme="shiden"] .sec-head h2 small, :root[data-theme="shiden"] .eyebrow { color: var(--tech); }
+:root[data-theme="shiden"] #theme-btn { color: var(--accent); border-color: var(--accent); }
+.music-btn { color: var(--accent); border-color: var(--accent); text-decoration: none; animation: music-pulse 2.4s ease-in-out infinite; }
+@keyframes music-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(143, 224, 74, 0.0); } 50% { box-shadow: 0 0 0 5px rgba(143, 224, 74, 0.22); } }
+@media (prefers-reduced-motion: reduce) { .music-btn { animation: none; } }
+
+/* 背景音樂：隱藏的播放器與按鈕狀態 */
+#music-player, #music-player + iframe, iframe#music-player { position: fixed; left: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; }
+.music-btn { font: inherit; cursor: pointer; }
+.music-btn .ic-stop { display: none; }
+.music-btn.on { background: var(--accent); color: var(--accent-ink); animation: none; }
+.music-btn.on .ic-play { display: none; }
+.music-btn.on .ic-stop { display: block; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }

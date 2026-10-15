@@ -51,13 +51,82 @@
 
   /* ---------- 主題 ---------- */
   const THEME_KEY = "lab-theme";
-  function applyTheme(t) { const r = document.documentElement; if (t === "light" || t === "dark") r.setAttribute("data-theme", t); else r.removeAttribute("data-theme"); }
+  const THEMES = ["system", "light", "dark", "shiden"];   // shiden（紫電）：紫底螢光綠的特別配色，會多出音樂按鈕
+  /* 紫電模式的背景音樂：在這幾首 YouTube 影片之間隨機播放（填影片 ID，網址 v= 後面那一段） */
+  const MUSIC = ["V36Gz7cUbas", "D0QJTrb98kE"];
+  function applyTheme(t) {
+    const r = document.documentElement;
+    if (t === "light" || t === "dark" || t === "shiden") r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    const m = document.getElementById("music-btn"); if (m) m.hidden = t !== "shiden";
+    if (t !== "shiden") Music.stop();
+  }
+
+  /* ---------- 背景音樂（網頁內隱藏的 YouTube 播放器） ---------- */
+  const Music = (function () {
+    let player = null, ready = false, playing = false, current = null, failed = new Set(), apiLoading = false, wantPlay = false;
+    const pick = () => {
+      const pool = MUSIC.filter((id) => !failed.has(id) && id !== current);
+      const list = pool.length ? pool : MUSIC.filter((id) => !failed.has(id));
+      return list.length ? list[Math.floor(Math.random() * list.length)] : null;
+    };
+    function setBtn() {
+      const b = document.getElementById("music-btn"); if (!b) return;
+      b.setAttribute("aria-pressed", playing ? "true" : "false");
+      b.classList.toggle("on", playing);
+      const label = playing ? U.theme.musicStop : U.theme.music;
+      b.setAttribute("aria-label", label); b.title = label;
+    }
+    function loadApi() {
+      if (window.YT && window.YT.Player) return onApi();
+      if (apiLoading) return; apiLoading = true;
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => { if (prev) prev(); onApi(); };
+      const sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(sc);
+    }
+    function onApi() {
+      if (player) return;
+      const id = pick(); if (!id) return;
+      current = id;
+      player = new YT.Player("music-player", {
+        host: "https://www.youtube-nocookie.com", width: 1, height: 1, videoId: id,
+        playerVars: { autoplay: 1, controls: 0, playsinline: 1, rel: 0 },
+        events: {
+          onReady: (e) => { ready = true; if (wantPlay) { e.target.playVideo(); } },
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PLAYING) { playing = true; setBtn(); }
+            if (e.data === YT.PlayerState.ENDED) { next(); }
+          },
+          onError: () => { failed.add(current); if (failed.size >= MUSIC.length) { playing = false; wantPlay = false; setBtn(); toast(U.theme.musicBlocked); } else next(); },
+        },
+      });
+    }
+    function next() { const id = pick(); if (!id || !player) return; current = id; player.loadVideoById(id); }
+    function play() {
+      wantPlay = true; playing = true; setBtn();
+      if (!player) return loadApi();
+      if (ready) { next(); player.playVideo(); }
+    }
+    function stop() {
+      wantPlay = false;
+      if (player && ready) { try { player.stopVideo(); } catch (e) {} }
+      playing = false; setBtn();
+    }
+    return { play, stop, toggle: () => (playing ? stop() : play()), setBtn };
+  })();
+  function toast(msg) {
+    let t = document.getElementById("toast");
+    if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 3200);
+  }
   applyTheme(store.get(THEME_KEY, "system"));
   function themeIcon() {
     const t = store.get(THEME_KEY, "system");
     const btn = $("#theme-btn"); if (!btn) return;
-    btn.setAttribute("aria-label", U.theme.label + "：" + (t === "dark" ? U.theme.dark : t === "light" ? U.theme.light : U.theme.system));
-    btn.innerHTML = t === "dark" ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+    btn.setAttribute("aria-label", U.theme.label + "：" + (t === "dark" ? U.theme.dark : t === "light" ? U.theme.light : t === "shiden" ? U.theme.shiden : U.theme.system));
+    btn.title = btn.getAttribute("aria-label");
+    Music.setBtn();
+    btn.innerHTML = t === "shiden" ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><path d="M13 6.5l-4 6h3.5l-1.5 5 4.5-6.5h-3.5z" fill="currentColor" stroke-width="1.2"/></svg>'
+      : t === "dark" ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
       : t === "light" ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
       : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>';
   }
@@ -272,9 +341,11 @@
     btn.addEventListener("click", () => { const o = links.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
     links.addEventListener("click", (e) => { if (e.target.closest("a")) { links.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); } });
     $("#theme-btn").addEventListener("click", () => {
-      const order = ["system", "light", "dark"]; const t = order[(order.indexOf(store.get(THEME_KEY, "system")) + 1) % 3];
+      const t = THEMES[(THEMES.indexOf(store.get(THEME_KEY, "system")) + 1) % THEMES.length];
       store.set(THEME_KEY, t); applyTheme(t); themeIcon();
+      if (t === "shiden") Music.play();   // 切進紫電模式就開始播放（點擊算使用者操作，瀏覽器才允許有聲音的自動播放）
     });
+    $("#music-btn").addEventListener("click", () => Music.toggle());
     $("#lang-switch").addEventListener("click", (e) => {
       const b = e.target.closest("button[data-lang]"); if (!b || b.dataset.lang === lang) return;
       const y = window.scrollY;
@@ -363,5 +434,5 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", () => { renderAll(); bindEvents(); searchSetup(); });
+  document.addEventListener("DOMContentLoaded", () => { applyTheme(store.get(THEME_KEY, "system")); renderAll(); bindEvents(); searchSetup(); });
 })();
