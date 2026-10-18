@@ -321,7 +321,8 @@
 
   function renderFooter() {
     const cp = C.copyright || {}, L = C.lab || {};
-    $("#footer").innerHTML = `<div class="wrap"><div><b>${esc(L.nameZh)}</b>　${esc(L.nameEn)}</div>${cp.holder ? `<div>© ${esc(cp.year || new Date().getFullYear())} ${esc(cp.holder)}　${esc(cp.note || "")}</div>` : ""}</div>`;
+    $("#footer").innerHTML = `<div class="wrap"><div><b>${esc(L.nameZh)}</b>　${esc(L.nameEn)}</div>${cp.holder ? `<div>© ${esc(cp.year || new Date().getFullYear())} ${esc(cp.holder)}　${esc(cp.note || "")}</div>` : ""}${window.labConsent ? `<div><button type="button" class="linkish" id="ga-settings">${esc(window.labConsent.text())}</button></div>` : ""}</div>`;
+    const gs = $("#ga-settings"); if (gs) gs.onclick = () => window.labConsent.show();
   }
 
   function renderAll() {
@@ -343,13 +344,15 @@
     $("#theme-btn").addEventListener("click", () => {
       const t = THEMES[(THEMES.indexOf(store.get(THEME_KEY, "system")) + 1) % THEMES.length];
       store.set(THEME_KEY, t); applyTheme(t); themeIcon();
+      if (window.labTrack) labTrack("select_theme", { theme: t });
       if (t === "shiden") Music.play();   // 切進紫電模式就開始播放（點擊算使用者操作，瀏覽器才允許有聲音的自動播放）
     });
-    $("#music-btn").addEventListener("click", () => Music.toggle());
+    $("#music-btn").addEventListener("click", () => { Music.toggle(); if (window.labTrack) labTrack("music_toggle", { state: $("#music-btn").getAttribute("aria-pressed") === "true" ? "play" : "stop" }); });
     $("#lang-switch").addEventListener("click", (e) => {
       const b = e.target.closest("button[data-lang]"); if (!b || b.dataset.lang === lang) return;
       const y = window.scrollY;
       store.set(LANG_KEY, b.dataset.lang); setLang(b.dataset.lang); renderAll();
+      if (window.labTrack) labTrack("select_language", { language: lang });
       window.scrollTo(0, y);
       const nb = $(`#lang-switch button[data-lang="${lang}"]`); if (nb) nb.focus();
     });
@@ -360,6 +363,7 @@
     $("#video-grid").addEventListener("click", (e) => {
       const b = e.target.closest(".play"); if (!b) return;
       const box = b.parentElement;
+      const card = b.closest(".card"); if (window.labTrack && card) labTrack("video_play", { video_card: card.id.replace(/^video-/, "") });
       box.innerHTML = `<iframe src="${esc(box.dataset.src)}" title="${esc(U.ytTitle)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
     });
     /* 站內跳轉並閃一下目標卡片 */
@@ -417,7 +421,7 @@
     }
     function open() { layer.hidden = false; document.body.style.overflow = "hidden"; input.value = ""; run(); setTimeout(() => input.focus(), 10); }
     function close() { layer.hidden = true; document.body.style.overflow = ""; }
-    function go(i) { const r = results[i]; if (!r) return; close(); flashTo(document.getElementById(r.target)); }
+    function go(i) { const r = results[i]; if (!r) return; if (window.labTrack) labTrack("search", { search_term: input.value.trim(), result: r.target }); close(); flashTo(document.getElementById(r.target)); }
     $("#search-btn").addEventListener("click", open);
     $("#search-close").addEventListener("click", close);
     layer.addEventListener("click", (e) => { if (e.target === layer) close(); const b = e.target.closest("button[data-i]"); if (b) go(+b.dataset.i); });
