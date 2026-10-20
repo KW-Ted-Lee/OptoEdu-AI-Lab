@@ -74,6 +74,12 @@ window.LAB_I18N.en = {
       stats: "Guided practice · Free mode · Exam",
     },
     {
+      id: "intro-optometry-lab", short: "Intro Bench", zh: "Intro to Optometry Bench", en: "視光概論實驗台",
+      desc: "The online learning platform for first-year Introduction to Optometry in the 5-year program: 16 weeks matched one-to-one with the lecture slides, each with concept cards, interactive simulations, concept checks, ★ core calculations and bilingual terminology, plus a calculation gym, mixed challenges and flashcards.",
+      tags: ["Intro to optometry", "Interactive labs", "Terminology"],
+      stats: "16 weeks · 9 ★ core calculations",
+    },
+    {
       id: "optquest", zh: "OptQuest II", en: "Optometry RPG",
       desc: "An optometry RPG set on the Mackay campus: solve clinical cases, collect equipment, complete quests and finally face the end-of-term boss exam. Teachers can export scores from the dashboard.",
       note: "For Mackay students only",

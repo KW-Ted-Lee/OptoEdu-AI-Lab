@@ -82,7 +82,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "",
       topics: ["眼球構造", "近視 / 遠視 / 散光", "老花與調節", "聚散度", "Prentice 法則", "視光學未來發展"],
-      platforms: ["optics-bench", "optometry-lab-bench"],
+      platforms: ["intro-optometry-lab", "optics-bench", "optometry-lab-bench"],
     },
     {
       id: "optometry-english", code: "", tag: ["二專在職", "五專"], semester: "",
@@ -118,6 +118,13 @@ window.LAB_CONFIG = {
       url: "https://kw-ted-lee.github.io/general.optometry-lab/phoropter.html", status: "live",
       tags: ["綜合驗光儀", "驗光流程", "模擬操作"],
       stats: "引導練習・自由操作・考核",
+    },
+    {
+      id: "intro-optometry-lab", short: "概論實驗台", zh: "視光概論實驗台", en: "Intro to Optometry Bench",
+      desc: "五專一年級視光概論的線上學習平台：16 週內容和上課投影片一一對應，每週有觀念卡、互動模擬、觀念檢核、★ 必會計算與中英名詞，另有計算練功房、綜合挑戰與名詞字卡。",
+      url: "https://kw-ted-lee.github.io/intro.optometry-lab/", status: "live",
+      tags: ["視光概論", "互動實驗", "中英名詞"],
+      stats: "16 授課週・9 項 ★ 必會計算",
     },
     {
       id: "optquest", short: "OptQuest II", zh: "OptQuest II", en: "Optometry RPG",
