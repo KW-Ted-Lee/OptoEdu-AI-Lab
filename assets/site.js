@@ -167,19 +167,19 @@
     $("#logo-name").textContent = L.short || L.nameZh || "";
     $("#logo-sub").textContent = L.nameZh || "";
     $("#hero-unit").textContent = L.unit || "";
-    $("#hero-title").textContent = L.nameZh || "";
+    $("#hero-title").innerHTML = (Array.isArray(L.titleLines) && L.titleLines.length ? L.titleLines : [L.nameZh || ""]).map(esc).join("<br>");
     $("#hero-en").textContent = L.nameEn || "";
     $("#hero-tag").textContent = L.tagline || "";
     $("#hero-intro").textContent = L.intro || "";
     const hasAdm = (C.videos || []).some((v) => v.id === "admissions");
-    $("#hero-cta").innerHTML = `<a class="btn" href="#courses">${esc(U.cta.courses)}</a><a class="btn ghost" href="#platforms">${esc(U.cta.platforms)}</a>` +
+    $("#hero-cta").innerHTML = `<a class="btn" href="#courses">${esc(U.cta.courses)}</a><a class="btn ghost" href="#classroom">${esc(U.cta.platforms)}</a>` +
       (hasAdm ? `<a class="btn ghost" href="#video-admissions" data-flash>${esc(U.cta.admissions)}</a>` : "");
     const P = C.pi || {};
     const title = Array.isArray(P.title) ? P.title.slice(P.title.length > 1 ? 1 : 0).join("｜") : P.title;   // 首頁小字：去掉第一行（科別）
     $("#hero-pi").innerHTML = P.nameZh ? `${P.photo ? `<img src="${esc(P.photo)}" alt="" width="36" height="36">` : ""}<span><small>${esc(U.heroPi)}</small><b>${esc(P.nameZh)}</b>${title ? `<em>${esc(title)}</em>` : ""}</span>` : "";
     const PL = C.platforms || [];
-    const online = PL.filter((p) => (p.status === "live" && p.url) || p.status === "campus").length;
-    const campus = PL.filter((p) => p.status === "campus").length;
+    const online = PL.filter((p) => kindOf(p) === "course").length;     // 無邊界教室：課程
+    const campus = PL.filter((p) => kindOf(p) === "bench").length;      // 無邊界教室：實驗台
     $("#hero-stats").innerHTML = [[(C.courses || []).length, U.stats.courses], [online, U.stats.online], [campus, U.stats.campus], [(C.research || []).length, U.stats.research]]
       .map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("");
     $("#chart").innerHTML = chart();
@@ -225,12 +225,15 @@
     $("#course-grid").querySelectorAll(".card").forEach((card) => { card.hidden = !(filterTag === "all" || card.dataset.tag.split("|").includes(filterTag)); });
   }
 
-  function renderPlatforms() {
-    $("#platform-grid").innerHTML = (C.platforms || []).map((p) => {
-      const st = statusLabel(p.status);
-      const usedBy = (C.courses || []).filter((c) => (c.platforms || []).includes(p.id)).map((c) => c.zh).concat(p.usedFor || []);
-      const go = p.url && p.status === "live" ? `<a class="btn" href="${esc(p.url)}">${esc(U.enter)}</a>` : `<span class="btn ghost" aria-disabled="true">${esc(st)}</span>`;
-      return `<article class="card" id="plat-${esc(p.id)}">
+  /* 無邊界教室：依 kind 分成「課程」與「實驗台」兩區，上方的分類按鈕可以只看其中一區 */
+  let roomTab = "all";
+  const kindOf = (p) => (p.kind === "course" ? "course" : "bench");
+  function platCard(p) {
+    const st = statusLabel(p.status);
+    const usedBy = (C.courses || []).filter((c) => (c.platforms || []).includes(p.id)).map((c) => c.zh).concat(p.usedFor || []);
+    const enter = kindOf(p) === "course" ? (U.enterCourse || U.enter) : (U.enterBench || U.enter);
+    const go = p.url && p.status === "live" ? `<a class="btn" href="${esc(p.url)}">${esc(enter)}</a>` : `<span class="btn ghost" aria-disabled="true">${esc(st)}</span>`;
+    return `<article class="card" id="plat-${esc(p.id)}">
         <div class="card-top">${p.status === "campus" ? `<span class="status live">${esc(U.status.live)}</span><span class="status campus">${esc(U.status.campusOnly)}</span>` : `<span class="status ${esc(p.status || "soon")}">${esc(st)}</span>`}</div>
         <h3>${esc(p.zh)}<span class="en">${esc(p.en)}</span></h3>
         <p class="desc">${esc(p.desc)}</p>
@@ -240,7 +243,21 @@
         ${usedBy.length ? `<div class="meta">${esc(U.usedFor)}${usedBy.map(esc).join(esc(U.listSep))}</div>` : ""}
         <div class="links">${go}</div>
       </article>`;
-    }).join("");
+  }
+  function renderPlatforms() {
+    const R = U.rooms || { all: "全部", course: ["COURSES", "課程", ""], bench: ["BENCHES", "實驗台", ""] };
+    const list = C.platforms || [];
+    const groups = ["course", "bench"].map((k) => [k, list.filter((p) => kindOf(p) === k)]).filter(([, l]) => l.length);
+    $("#room-tabs").innerHTML = [["all", R.all, list.length]].concat(groups.map(([k, l]) => [k, R[k][1], l.length]))
+      .map(([v, l, n]) => `<button type="button" data-v="${esc(v)}" aria-pressed="${v === roomTab}">${esc(l)}<span class="n">${n}</span></button>`).join("");
+    $("#room-groups").innerHTML = groups.map(([k, l]) => `<div class="room" id="room-${k}" data-kind="${k}"${roomTab === "all" || roomTab === k ? "" : " hidden"}>
+        <div class="room-head"><small>${esc(R[k][0])}</small><h3>${esc(R[k][1])}</h3>${R[k][2] ? `<p>${esc(R[k][2])}</p>` : ""}</div>
+        <div class="grid">${l.map(platCard).join("")}</div>
+      </div>`).join("");
+  }
+  function applyRoom() {
+    $("#room-tabs").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x.dataset.v === roomTab ? "true" : "false"));
+    $("#room-groups").querySelectorAll(".room").forEach((g) => { g.hidden = !(roomTab === "all" || g.dataset.kind === roomTab); });
   }
 
   function renderVideos() {
@@ -334,6 +351,7 @@
   function flashTo(el) {
     if (!el) return;
     if (el.hidden || (el.closest(".card") && el.closest(".card").hidden)) { filterTag = "all"; applyFilter(); }
+    if (el.closest(".room") && el.closest(".room").hidden) { roomTab = "all"; applyRoom(); }
     el.scrollIntoView({ behavior: "smooth", block: "center" });
     el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
   }
@@ -359,6 +377,10 @@
     $("#course-chips").addEventListener("click", (e) => {
       const b = e.target.closest("button"); if (!b) return;
       filterTag = b.dataset.v; applyFilter();
+    });
+    $("#room-tabs").addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      roomTab = b.dataset.v; applyRoom();
     });
     $("#video-grid").addEventListener("click", (e) => {
       const b = e.target.closest(".play"); if (!b) return;

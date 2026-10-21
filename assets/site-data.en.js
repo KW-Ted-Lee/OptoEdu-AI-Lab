@@ -7,8 +7,9 @@
 window.LAB_I18N = window.LAB_I18N || {};
 window.LAB_I18N.en = {
   lab: {
-    nameZh: "Optometry Education & AI Lab",
-    nameEn: "視光智慧教學實驗室",
+    nameZh: "Borderless AI Education Lab",
+    nameEn: "無邊界智慧教學實驗室",
+    titleLines: ["Borderless", "AI Education Lab"],
     tagline: "Making optometry visible, hands-on, and learnable",
     intro: "We turn the abstract optics and clinical procedures of optometry courses into interactive materials that students can operate with their own hands, and we use artificial intelligence to develop new ways of teaching and assessing clinical skills.",
     unit: "Department of Optometry, Mackay Junior College of Medicine, Nursing, and Management",
@@ -56,7 +57,13 @@ window.LAB_I18N.en = {
 
   platforms: [
     {
-      id: "optics-bench", short: "Optics Bench", zh: "Optics Bench", en: "視光光學實驗台",
+      id: "optometry1-course", short: "Online Course", zh: "Optometry I", en: "視光學（一）線上課程",
+      desc: "The online course for Optometry I (2-year in-service program): 16 weeks matched one-to-one with the lecture slides, from case history, visual acuity notation and myopia, hyperopia and astigmatism to MPMVA, the clock dial, JCC, the stenopeic slit, binocular balance and the final prescription. Every week has simulated patients who talk back, concept checks, ★ core calculations and bilingual terms, paired week by week with Optometry Laboratory I.",
+      tags: ["Refraction", "Simulated patients", "Paired with the lab course"],
+      stats: "16 weeks · 62 interactive labs · 13 ★ core calculations",
+    },
+    {
+      id: "optics-bench", short: "Geometric Optics", zh: "Geometric Optics Bench", en: "幾何光學實驗台",
       desc: "15 chapters of geometric and visual optics with 30 draggable optics experiments, built around predict-then-verify, concept checks and practice problems with randomized numbers.",
       tags: ["Geometric optics", "Visual optics", "Interactive labs"],
       stats: "15 chapters · 30 labs · 83 problem types",
@@ -74,8 +81,8 @@ window.LAB_I18N.en = {
       stats: "Guided practice · Free mode · Exam",
     },
     {
-      id: "intro-optometry-lab", short: "Intro Bench", zh: "Intro to Optometry Bench", en: "視光概論實驗台",
-      desc: "The online learning platform for first-year Introduction to Optometry in the 5-year program: 16 weeks matched one-to-one with the lecture slides, each with concept cards, interactive simulations, concept checks, ★ core calculations and bilingual terminology, plus a calculation gym, mixed challenges and flashcards.",
+      id: "intro-optometry-lab", short: "Online Course", zh: "Introduction to Optometry", en: "視光概論線上課程",
+      desc: "The online course for first-year Introduction to Optometry in the 5-year program: 16 weeks matched one-to-one with the lecture slides, each with concept cards, interactive simulations, concept checks, ★ core calculations and bilingual terminology, plus a calculation gym, mixed challenges and flashcards.",
       tags: ["Intro to optometry", "Interactive labs", "Terminology"],
       stats: "16 weeks · 9 ★ core calculations",
     },
@@ -196,7 +203,7 @@ window.LAB_I18N.en = {
       "Supervisor (3rd term) & Continuing Education Convener, New Taipei City Optometrists Association",
     ],
     education: [
-      "M.S. Program in Artificial Intelligence Technology, National Taipei University of Technology (2025–2027, in progress)",
+      "Dual Master's Degree Program in Artificial Intelligence and Big Data for Executive Management, National Taipei University of Technology (2025–2027, in progress)",
       "Executive MBA, The University of Texas at Arlington (UTA) (2025–2027, in progress)",
       "B.S., Department of Optometry, Chung Shan Medical University (2015–2018)",
     ],

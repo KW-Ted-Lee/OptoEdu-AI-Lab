@@ -11,9 +11,10 @@
    ========================================================= */
 window.LAB_CONFIG = {
   lab: {
-    nameZh: "視光智慧教學實驗室",           // TODO：實驗室中文名稱（暫定）
-    nameEn: "Optometry Education & AI Lab", // TODO：實驗室英文名稱（暫定）
-    short: "OptoEdu AI Lab",
+    nameZh: "無邊界智慧教學實驗室",         // 2026/10 由「視光智慧教學實驗室」更名，預留跨足 AI 與長期照顧
+    nameEn: "Borderless AI Education Lab",  // TODO：英文名稱（暫定，可再調整）
+    short: "Borderless AI Lab",            // 左上角 logo 旁的簡稱
+    titleLines: ["無邊界", "智慧教學實驗室"], // 首頁大標分行顯示；不設定就顯示 nameZh 一行
     tagline: "讓視光學看得見、摸得到、練得會",
     intro: "我們把視光課程裡抽象的光學與臨床流程，做成學生可以親手操作的互動教材，並用人工智慧發展新的臨床教學與評量方式。",
     unit: "馬偕醫護管理專科學校 視光學科",
@@ -28,7 +29,7 @@ window.LAB_CONFIG = {
       time: "", room: "", status: "",
       credits: "2 學分",
       topics: ["視標與視力換算", "MAR / LogMAR", "光學十字", "MPMVA", "鐘面圖", "JCC", "裂孔板", "雙眼平衡"],
-      platforms: ["optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
+      platforms: ["optometry1-course", "optics-bench", "optometry-lab-bench", "phoropter", "record-ai"],
     },
     {
       id: "optometry-lab-1", code: "01058", tag: "二專在職", semester: "",
@@ -95,39 +96,49 @@ window.LAB_CONFIG = {
     },
   ],
 
-  /* 學習平台：short 是課程卡片上的簡稱；url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以
+  /* 無邊界教室（原「學習平台」）：每一筆用 kind 分到兩個分類
+       kind: "course" → 課程：一門課一個線上課程，依週次對應上課投影片
+       kind: "bench"  → 實驗台：依主題的互動實驗、模擬器與工具，不綁定單一課程
+     short 是課程卡片上的簡稱；url 用相對於網站根目錄的路徑（例如 "/optics-bench/"），外部網址也可以
      status：live 上線中／soon 即將上線／dev 開發中／campus 校內使用（不顯示連結）；note 會顯示在說明下方 */
   platforms: [
     {
-      id: "optics-bench", short: "光學實驗台", zh: "視光光學實驗台", en: "Optics Bench",
+      id: "optometry1-course", kind: "course", short: "線上課程", zh: "視光學（一）", en: "Optometry I · Online Course",
+      desc: "二專在職視光學（一）的線上課程：16 週和上課投影片一一對應，從問診、視力與視標換算、近視遠視散光，到 MPMVA、鐘面圖、JCC、裂孔板、雙眼平衡與最終處方。每週有會回話的模擬病人、觀念檢核、★ 必會計算與中英名詞，並逐週對照視光學實驗（一）。",
+      url: "", status: "soon",                           // TODO：上傳 GitHub 後填網址（例如 "/optometry1-course/"），status 改成 "live"
+      tags: ["驗光流程", "模擬病人", "逐週對照實驗課"],
+      stats: "16 授課週・62 個互動實驗・13 項 ★ 必會計算",
+    },
+    {
+      id: "optics-bench", kind: "bench", short: "幾何光學", zh: "幾何光學實驗台", en: "Geometric Optics Bench",
       desc: "幾何與視覺光學 15 章、30 個可拖曳操作的光學實驗，搭配先預測再驗證、觀念檢核與隨機數字練習題。",
       url: "/optics-bench/", status: "live",
       tags: ["幾何光學", "視覺光學", "互動實驗"],
       stats: "15 章・30 實驗・83 種練習題型",
     },
     {
-      id: "optometry-lab-bench", short: "臨床實驗台", zh: "視光學臨床實驗台", en: "Clinical Optometry Bench",
+      id: "optometry-lab-bench", kind: "bench", short: "臨床實驗台", zh: "視光學臨床實驗台", en: "Clinical Optometry Bench",
       desc: "視光學（一）（二）的互動教材：把視力表、驗光流程與雙眼視覺檢查做成可操作的模擬，每章先建立觀念、預測結果，再動手驗證，搭配觀念檢核與隨機數字練習題。",
       url: "https://kw-ted-lee.github.io/general.optometry-lab/", status: "live",
       tags: ["驗光流程", "臨床模擬", "互動實驗"],
       stats: "序章＋9 章",
     },
     {
-      id: "phoropter", short: "驗光儀模擬", zh: "綜合驗光儀模擬", en: "Phoropter Simulator",
+      id: "phoropter", kind: "bench", short: "驗光儀模擬", zh: "綜合驗光儀模擬", en: "Phoropter Simulator",
       desc: "一台可以完整操作的綜合驗光儀：轉旋鈕、換輔助鏡、擺入 JCC 與旋轉稜鏡，問病人、聽回答、自己判斷終點，從儀器設定一路做到雙眼平衡與近用加入度。",
       url: "https://kw-ted-lee.github.io/general.optometry-lab/phoropter.html", status: "live",
       tags: ["綜合驗光儀", "驗光流程", "模擬操作"],
       stats: "引導練習・自由操作・考核",
     },
     {
-      id: "intro-optometry-lab", short: "概論實驗台", zh: "視光概論實驗台", en: "Intro to Optometry Bench",
-      desc: "五專一年級視光概論的線上學習平台：16 週內容和上課投影片一一對應，每週有觀念卡、互動模擬、觀念檢核、★ 必會計算與中英名詞，另有計算練功房、綜合挑戰與名詞字卡。",
+      id: "intro-optometry-lab", kind: "course", short: "線上課程", zh: "視光概論", en: "Introduction to Optometry · Online Course",
+      desc: "五專一年級視光概論的線上課程：16 週內容和上課投影片一一對應，每週有觀念卡、互動模擬、觀念檢核、★ 必會計算與中英名詞，另有計算練功房、綜合挑戰與名詞字卡。",
       url: "https://kw-ted-lee.github.io/intro.optometry-lab/", status: "live",
       tags: ["視光概論", "互動實驗", "中英名詞"],
       stats: "16 授課週・9 項 ★ 必會計算",
     },
     {
-      id: "optquest", short: "OptQuest II", zh: "OptQuest II", en: "Optometry RPG",
+      id: "optquest", kind: "bench", short: "OptQuest II", zh: "OptQuest II", en: "Optometry RPG",
       desc: "以馬偕校園為場景的視光 RPG 遊戲：解開臨床案例、收集裝備、完成任務，最後挑戰期末魔王考試；教師後台可匯出成績。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -135,7 +146,7 @@ window.LAB_CONFIG = {
       stats: "11 個臨床案例・17 個任務",
     },
     {
-      id: "record-ai", short: "AI 驗光紀錄", zh: "AI 驗光紀錄輔助學習系統", en: "Refraction Record Coach",
+      id: "record-ai", kind: "bench", short: "AI 驗光紀錄", zh: "AI 驗光紀錄輔助學習系統", en: "Refraction Record Coach",
       desc: "拍下紙本驗光紀錄表，系統辨識內容後檢查記錄完整性與臨床合理性，即時給學生學習回饋。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -143,7 +154,7 @@ window.LAB_CONFIG = {
       stats: "",
     },
     {
-      id: "zcsbv", short: "ZCSBV 圖解", zh: "ZCSBV 圖解教學程式", en: "ZCSBV Plotter",
+      id: "zcsbv", kind: "bench", short: "ZCSBV 圖解", zh: "ZCSBV 圖解教學程式", en: "ZCSBV Plotter",
       desc: "輸入雙眼視覺檢查數據，自動繪出 ZCSBV 圖，幫助學生判讀內聚不足、開散過度等六種常見雙眼視覺問題。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -151,7 +162,7 @@ window.LAB_CONFIG = {
       stats: "",
     },
     {
-      id: "blinklearn", short: "BlinkLearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
+      id: "blinklearn", kind: "bench", short: "BlinkLearn", zh: "BlinkLearn EduAI", en: "Blink & Gaze Learning Platform",
       desc: "運用電腦視覺分析學習時的用眼狀態，提供個人化護眼提醒，讓學生在學習的同時照顧視力健康。",
       url: "", status: "campus",                          // 校內使用：不公開網址
       note: "限本校學生使用",
@@ -272,7 +283,7 @@ window.LAB_CONFIG = {
       "新北市驗光師公會 第三屆監事、繼續教育組召集人",
     ],
     education: [
-      "國立臺北科技大學 人工智慧科技碩士學位學程（2025–2027，就讀中）",
+      "國立臺北科技大學 人工智慧與大數據高階管理雙聯碩士學位學程（2025–2027，就讀中）",
       "美國德州大學阿靈頓分校（UTA）高階主管經營管理碩士 EMBA（2025–2027，就讀中）",
       "中山醫學大學 視光學系 學士（2015–2018）",
     ],
