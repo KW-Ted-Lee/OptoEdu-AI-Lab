@@ -58,6 +58,7 @@ window.LAB_I18N.en = {
   platforms: [
     {
       id: "optometry1-course", short: "Online Course", zh: "Optometry I", en: "視光學（一）線上課程",
+      note: "For Mackay students only",
       desc: "The online course for Optometry I (2-year in-service program): 16 weeks matched one-to-one with the lecture slides, from case history, visual acuity notation and myopia, hyperopia and astigmatism to MPMVA, the clock dial, JCC, the stenopeic slit, binocular balance and the final prescription. Every week has simulated patients who talk back, concept checks, ★ core calculations and bilingual terms, paired week by week with Optometry Laboratory I.",
       tags: ["Refraction", "Simulated patients", "Paired with the lab course"],
       stats: "16 weeks · 62 interactive labs · 13 ★ core calculations",
@@ -82,6 +83,7 @@ window.LAB_I18N.en = {
     },
     {
       id: "intro-optometry-lab", short: "Online Course", zh: "Introduction to Optometry", en: "視光概論線上課程",
+      note: "For Mackay students only",
       desc: "The online course for first-year Introduction to Optometry in the 5-year program: 16 weeks matched one-to-one with the lecture slides, each with concept cards, interactive simulations, concept checks, ★ core calculations and bilingual terminology, plus a calculation gym, mixed challenges and flashcards.",
       tags: ["Intro to optometry", "Interactive labs", "Terminology"],
       stats: "16 weeks · 9 ★ core calculations",

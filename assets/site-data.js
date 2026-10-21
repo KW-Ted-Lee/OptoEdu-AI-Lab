@@ -105,7 +105,8 @@ window.LAB_CONFIG = {
     {
       id: "optometry1-course", kind: "course", short: "線上課程", zh: "視光學（一）", en: "Optometry I · Online Course",
       desc: "二專在職視光學（一）的線上課程：16 週和上課投影片一一對應，從問診、視力與視標換算、近視遠視散光，到 MPMVA、鐘面圖、JCC、裂孔板、雙眼平衡與最終處方。每週有會回話的模擬病人、觀念檢核、★ 必會計算與中英名詞，並逐週對照視光學實驗（一）。",
-      url: "/optometry1-course/", status: "live",        // repo：optometry1-course
+      url: "", status: "campus",                         // 校內使用：不公開網址（連結只在班級群組發）
+      note: "限本校學生使用",
       tags: ["驗光流程", "模擬病人", "逐週對照實驗課"],
       stats: "16 授課週・62 個互動實驗・13 項 ★ 必會計算",
     },
@@ -133,7 +134,8 @@ window.LAB_CONFIG = {
     {
       id: "intro-optometry-lab", kind: "course", short: "線上課程", zh: "視光概論", en: "Introduction to Optometry · Online Course",
       desc: "五專一年級視光概論的線上課程：16 週內容和上課投影片一一對應，每週有觀念卡、互動模擬、觀念檢核、★ 必會計算與中英名詞，另有計算練功房、綜合挑戰與名詞字卡。",
-      url: "https://kw-ted-lee.github.io/intro.optometry-lab/", status: "live",
+      url: "", status: "campus",                          // 校內使用：不公開網址
+      note: "限本校學生使用",
       tags: ["視光概論", "互動實驗", "中英名詞"],
       stats: "16 授課週・9 項 ★ 必會計算",
     },
