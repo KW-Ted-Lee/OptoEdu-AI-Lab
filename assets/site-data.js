@@ -18,6 +18,7 @@ window.LAB_CONFIG = {
     tagline: "讓視光學看得見、摸得到、練得會",
     intro: "我們把視光課程裡抽象的光學與臨床流程，做成學生可以親手操作的互動教材，並用人工智慧發展新的臨床教學與評量方式。",
     unit: "馬偕醫護管理專科學校 視光學科",
+    admissionsUrl: "https://kw-ted-lee.github.io/mkc-optometry-guide-site/",   // 招生網站（五專升學指南）：首頁「招生資訊」按鈕與招生說明會區塊會連過去（另開新分頁）
   },
 
   /* 課程：tag = 學制或班別（多個學制都有開就用陣列，例如 ["二專在職", "五專"]）；platforms 填學習平台的 id（見下方 platforms） */

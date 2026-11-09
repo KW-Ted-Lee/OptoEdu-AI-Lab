@@ -173,7 +173,8 @@
     $("#hero-intro").textContent = L.intro || "";
     const hasAdm = (C.videos || []).some((v) => v.id === "admissions");
     $("#hero-cta").innerHTML = `<a class="btn" href="#courses">${esc(U.cta.courses)}</a><a class="btn ghost" href="#classroom">${esc(U.cta.platforms)}</a>` +
-      (hasAdm ? `<a class="btn ghost" href="#video-admissions" data-flash>${esc(U.cta.admissions)}</a>` : "");
+      (L.admissionsUrl ? `<a class="btn ghost" href="${esc(L.admissionsUrl)}"${/^https?:/.test(L.admissionsUrl) ? ' target="_blank" rel="noopener"' : ""}>${esc(U.cta.admissions)}</a>`
+        : hasAdm ? `<a class="btn ghost" href="#video-admissions" data-flash>${esc(U.cta.admissions)}</a>` : "");
     const P = C.pi || {};
     const title = Array.isArray(P.title) ? P.title.slice(P.title.length > 1 ? 1 : 0).join("｜") : P.title;   // 首頁小字：去掉第一行（科別）
     $("#hero-pi").innerHTML = P.nameZh ? `${P.photo ? `<img src="${esc(P.photo)}" alt="" width="36" height="36">` : ""}<span><small>${esc(U.heroPi)}</small><b>${esc(P.nameZh)}</b>${title ? `<em>${esc(title)}</em>` : ""}</span>` : "";
@@ -288,7 +289,12 @@
         ${v.tags && v.tags.length ? `<div class="tags">${v.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
         ${cs.length ? `<div class="links"><span class="lead">${esc(U.relatedCourses)}</span>${cs.map((c) => `<a href="#course-${esc(c.id)}" data-flash>${esc(c.zh)}</a>`).join("")}</div>` : ""}
         <div class="links">${yt}${ytList}</div>
-        ${(v.links || []).length ? `<div class="links social">${v.links.filter((l) => /^https:\/\//.test(l.url || "")).map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join("")}</div>` : ""}
+        ${(() => {   // 招生說明會區塊：加上招生網站連結（lab.admissionsUrl）
+          const adm = v.id === "admissions" && (C.lab || {}).admissionsUrl;
+          const ext = (v.links || []).filter((l) => /^https:\/\//.test(l.url || "")).map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`);
+          if (adm) ext.unshift(`<a href="${esc(adm)}"${/^https?:/.test(adm) ? ' target="_blank" rel="noopener"' : ""}>${esc(U.cta.admissionsSite || U.cta.admissions)} →</a>`);
+          return ext.length ? `<div class="links social">${ext.join("")}</div>` : "";
+        })()}
       </article>`;
     }).join("");
   }
